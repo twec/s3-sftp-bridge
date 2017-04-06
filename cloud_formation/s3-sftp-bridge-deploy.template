@@ -109,7 +109,7 @@
       "Type": "AWS::Lambda::Function",
       "Properties": {
         "Code": {
-          "S3Bucket": "com.gilt.public.backoffice",
+          "S3Bucket": "com.twec.engineering.public",
           "S3Key": "lambda_functions/s3-sftp-bridge.zip"
         },
         "FunctionName": { "Ref": "AWS::StackName" },
