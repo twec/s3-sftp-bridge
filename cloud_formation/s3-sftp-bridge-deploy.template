@@ -154,11 +154,17 @@
         "BridgeResourcePolicy"
       ]
     },
+    "UniversalLoggingGroup": {
+      "Type" : "AWS::Logs::LogGroup",
+      "Properties" : {
+        "RetentionInDays" : 7
+      }
+    },
     "FunctionTimeoutMetric": {
-      "Type": "AWS::Logs::MetricFilter",    
+      "Type": "AWS::Logs::MetricFilter",
       "Properties": {
         "FilterPattern": "Task timed out",
-        "LogGroupName": { "Fn::Join" : ["", [ "/aws/lambda/", { "Ref" : "BridgeFunction" } ] ] },
+        "LogGroupName": { "Ref": "UniversalLoggingGroup" },
         "MetricTransformations": [
           {
             "MetricValue": "1",
@@ -172,10 +178,10 @@
       ]
     },
     "ConnectionTimeoutMetric": {
-      "Type": "AWS::Logs::MetricFilter",    
+      "Type": "AWS::Logs::MetricFilter",
       "Properties": {
         "FilterPattern": "ClientTimeoutException",
-        "LogGroupName": { "Fn::Join" : ["", [ "/aws/lambda/", { "Ref" : "BridgeFunction" } ] ] },
+        "LogGroupName": { "Ref": "UniversalLoggingGroup" },
         "MetricTransformations": [
           {
             "MetricValue": "1",
@@ -189,10 +195,10 @@
       ]
     },
     "ErrorMetric": {
-      "Type": "AWS::Logs::MetricFilter",    
+      "Type": "AWS::Logs::MetricFilter",
       "Properties": {
         "FilterPattern": "UnknownException",
-        "LogGroupName": { "Fn::Join" : ["", [ "/aws/lambda/", { "Ref" : "BridgeFunction" } ] ] },
+        "LogGroupName": { "Ref": "UniversalLoggingGroup" },
         "MetricTransformations": [
           {
             "MetricValue": "1",
@@ -206,10 +212,10 @@
       ]
     },
     "S3toSFTPMetric": {
-      "Type": "AWS::Logs::MetricFilter",    
+      "Type": "AWS::Logs::MetricFilter",
       "Properties": {
         "FilterPattern": "[timestamp, requestId, streamName, colon, moved = Moved, numFiles, files = files, from, orig = S3, to, dest = SFTP]",
-        "LogGroupName": { "Fn::Join" : ["", [ "/aws/lambda/", { "Ref" : "BridgeFunction" } ] ] },
+        "LogGroupName": { "Ref": "UniversalLoggingGroup" },
         "MetricTransformations": [
           {
             "MetricValue": "$numFiles",
@@ -223,10 +229,10 @@
       ]
     },
     "SFTPtoS3Metric": {
-      "Type": "AWS::Logs::MetricFilter",    
+      "Type": "AWS::Logs::MetricFilter",
       "Properties": {
         "FilterPattern": "[timestamp, requestId, streamName, colon, moved = Moved, numFiles, files = files, from, orig = SFTP, to, dest = S3]",
-        "LogGroupName": { "Fn::Join" : ["", [ "/aws/lambda/", { "Ref" : "BridgeFunction" } ] ] },
+        "LogGroupName": { "Ref": "UniversalLoggingGroup" },
         "MetricTransformations": [
           {
             "MetricValue": "$numFiles",
