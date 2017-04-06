@@ -157,6 +157,7 @@
     "UniversalLoggingGroup": {
       "Type" : "AWS::Logs::LogGroup",
       "Properties" : {
+        "LogGroupName": { "Fn::Join" : ["", [ "/aws/lambda/", { "Ref" : "BridgeFunction" } ] ] },
         "RetentionInDays" : 7
       }
     },
